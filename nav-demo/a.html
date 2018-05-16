@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header></header>
+    <main>
+        <div class="wrapper" id="main"> <!--wrapp用来作居中-->
+
+        </div>
+    </main>
+    <footer></footer>
+    <script>
+        //1.初始化数据
+        var keys={
+            '0':['q','w','e','r','t','y','u','i','o','p'],
+            '1':['a','s','d','f','g','h','j','k','l'],
+            '2':['z','x','c','v','b','n','m'],
+            length:3
+        }
+        var hash={
+            'q': 'qq.com',
+            'w': 'weibo.com',
+            'e': 'ele.me',
+            'r': 'renren.com', 
+            't': 'taobao.com', 
+            'y': 'youtube.com', 
+            'u': 'uc.com' , 
+            'i': 'iqiyi.com', 
+            'o': 'opera.com', 
+            'a': 'amazon.cn',
+            's': 'sohu.com', 
+            'z': 'zhihu.com', 
+            'm': 'meituan.com'
+        }
+                /**var hashInLocalStorage=getFromLocalStorage('zzz')//取出localstorage中zzz对应的hash,null空字符串
+        if(hashInLocalStorage){
+            hash=hashInLocalStorage//如果不是空的就覆盖
+        }
+        function tag(tagName,attributes){//tag随机取名
+			var element=document.createElement(tagName) 
+            for(var key in attributes){//key为className,id,textcontent等
+                element[key]=attributes[key]
+            }
+            return element
+		}
+        var div=tag('div',{className:'rows'})**/
+        var hashInLocalStorage=JSON.parse(localStorage.getItem('zzz')||'null')//取出localstorage中zzz对应的hash,null空字符串
+        if(hashInLocalStorage){
+            hash=hashInLocalStorage//如果不是空的就覆盖
+        }
+        //2.生成键盘
+        //遍历keys
+        var index=0
+        while(index<keys['length']){
+            var div=document.createElement('div')/**div1是个容器，创建一个div标签**/
+            div.className='row'
+            main.appendChild(div)/**把div1放到main1里面**/
+            var row=keys[index]//第一个数组0第二个数组1第三个数组2
+            //console.log(row)//打印10 9 7
+            var index2=0
+            /**while(index2<10){/**每行10个kbd**/
+                while(index2<row['length']){             /**这一行的长度 10 ，9 ，7 0-9 0-8 0-6**/
+                var kbd=document.createElement('kbd')
+                var span=document.createElement('span')
+                span.textContent=row[index2]
+                span.className="text"
+                kbd.appendChild(span)
+              /**  kbd.textContent=row[index2]           /**kbd1标签里面的文字内容**/
+                kbd.className='key'
+                var button=document.createElement('button')
+                button.textContent='编辑'
+                button.id=row[index2] 
+                var img=document.createElement('img')
+               if(hash[row[index2]]){
+                    img.src='http://'+hash[row[index2]]+'/favicon.ico'
+                }else{
+                    img.src='http://i.loli.net/2017/11/10/5a05afbc5e183.png'/**确定的图片，自己找 **/
+                }
+                //img.src='http://'+hash[row[index2]]+'/favicon.ico'
+                img.onerror=function(xxx){
+                    console.log('下载失败')
+                    xxx.target.src='http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                button.onclick=function(xzkjcnxlkcjlk){
+                   //console.log(xzkjcnxlkcjlk['target']['id'])
+                  /** xzkjcnxlkcjlk.target/**被用户点击的元素**/
+                  var button2=xzkjcnxlkcjlk['target']
+                  var img2=button2.previousSibling
+                  var key=button2['id']
+                  var x=prompt('给我一个网址')/**弹窗**/
+                  hash[key]=x//hash变更
+                  img2.src='http://'+x+'/favicon.ico'
+                  img2.onerror=function(xxx){
+                    console.log('下载失败')
+                    xxx.target.src='http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                  localStorage.setItem('zzz',JSON.stringify(hash))//只要hash变了就把他存到zzz里面
+                  //console.log(hash)
+                }
+                kbd.appendChild(img)
+                kbd.appendChild(button)
+                div.appendChild(kbd)
+                index2=index2+1
+            }           
+            index=index+1/**创建三个div**/
+        }
+        //3.监听键盘
+        document.onkeypress=function(xzkjcnxlkcjlk){/**xzkjcnxlkcjlk随机取的,用户按键在执行下一句**/
+            var key=xzkjcnxlkcjlk['key']/**显示键盘键入的**/
+            var website=hash[key]
+           console.log(website)
+           /**location.href='http://'+website  /**当前地址栏的地址=website 可以是很多网站**/
+           window.open('http://'+website,'_blank')/**新窗口打开**/
+        }
+    </script>
+</body>
+</html>
